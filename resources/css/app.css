@@ -9,8 +9,27 @@
 @custom-variant dark (&:where(.dark, .dark *));
 
 @theme {
-    --font-sans: 'Instrument Sans', ui-sans-serif, system-ui, sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Symbol', 'Noto Color Emoji';
+    /* ============================================================
+     * SOPHIA BRIDAL - DESIGN TOKENS
+     * Color palette: Gold + Cream + Dark
+     * Fonts: Playfair Display (heading) + Open Sans (body)
+     * ============================================================ */
 
+    /* Font families */
+    --font-sans: 'Open Sans', ui-sans-serif, system-ui, sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Symbol', 'Noto Color Emoji';
+    --font-serif: 'Playfair Display', ui-serif, Georgia, Cambria, 'Times New Roman', Times, serif;
+
+    /* Sophia Bridal brand colors */
+    --color-bridal-primary: #EAA636;        /* Gold — tombol utama, accent */
+    --color-bridal-primary-dark: #D89225;   /* Hover state */
+    --color-bridal-primary-light: #F4C36A;  /* Lighter accent */
+    --color-bridal-secondary: #545454;      /* Sub-text */
+    --color-bridal-light: #FDF5EB;          /* Cream — background section */
+    --color-bridal-cream: #FAF7F2;          /* Cream lebih netral */
+    --color-bridal-dark: #1E1916;           /* Heading, text utama */
+    --color-bridal-rose: #F8E8E5;           /* Soft blush accent */
+
+    /* Zinc (default Flux UI palette — biarkan) */
     --color-zinc-50: #fafafa;
     --color-zinc-100: #f5f5f5;
     --color-zinc-200: #e5e5e5;
@@ -23,16 +42,17 @@
     --color-zinc-900: #171717;
     --color-zinc-950: #0a0a0a;
 
-    --color-accent: var(--color-neutral-800);
-    --color-accent-content: var(--color-neutral-800);
+    /* Accent color (override Flux untuk pakai gold) */
+    --color-accent: var(--color-bridal-primary);
+    --color-accent-content: var(--color-bridal-primary);
     --color-accent-foreground: var(--color-white);
 }
 
 @layer theme {
     .dark {
-        --color-accent: var(--color-white);
-        --color-accent-content: var(--color-white);
-        --color-accent-foreground: var(--color-neutral-800);
+        --color-accent: var(--color-bridal-primary-light);
+        --color-accent-content: var(--color-bridal-primary-light);
+        --color-accent-foreground: var(--color-bridal-dark);
     }
 }
 
@@ -44,6 +64,11 @@
     ::backdrop,
     ::file-selector-button {
         border-color: var(--color-gray-200, currentColor);
+    }
+
+    /* Heading default pakai Playfair Display untuk feel elegan bridal */
+    h1, h2, h3, h4, h5, h6 {
+        font-family: var(--font-serif);
     }
 }
 
@@ -61,6 +86,67 @@ select:focus[data-flux-control] {
     @apply outline-hidden ring-2 ring-accent ring-offset-2 ring-offset-accent-foreground;
 }
 
-/* \[:where(&)\]:size-4 {
-    @apply size-4;
-} */
+/* ============================================================
+ * SOPHIA BRIDAL - UTILITY CLASSES
+ * ============================================================ */
+
+@layer utilities {
+    .font-display {
+        font-family: var(--font-serif);
+    }
+
+    .bg-bridal-gradient {
+        background: linear-gradient(135deg, var(--color-bridal-light) 0%, var(--color-bridal-cream) 100%);
+    }
+
+    .text-gradient-gold {
+        background: linear-gradient(135deg, var(--color-bridal-primary) 0%, var(--color-bridal-primary-dark) 100%);
+        -webkit-background-clip: text;
+        background-clip: text;
+        -webkit-text-fill-color: transparent;
+    }
+}
+
+/* ============================================================
+ * SOPHIA BRIDAL - FLUX UI Light Mode Overrides
+ * Force readable text colors di area light mode (auth pages, homepage)
+ * ============================================================ */
+[data-flux-appearance="light"] {
+    /* Heading & subheading */
+    [data-flux-heading] {
+        color: var(--color-bridal-dark) !important;
+    }
+    [data-flux-subheading] {
+        color: var(--color-bridal-secondary) !important;
+    }
+
+    /* Form labels */
+    [data-flux-label] {
+        color: var(--color-bridal-dark) !important;
+        font-weight: 600 !important;
+    }
+
+    /* Field description text */
+    [data-flux-description] {
+        color: var(--color-bridal-secondary) !important;
+    }
+
+    /* Input fields */
+    [data-flux-control] {
+        background-color: white !important;
+        color: var(--color-bridal-dark) !important;
+        border-color: #E5E5E0 !important;
+    }
+    [data-flux-control]::placeholder {
+        color: #A0A0A0 !important;
+    }
+    [data-flux-control]:focus {
+        border-color: var(--color-bridal-primary) !important;
+    }
+
+    /* Checkbox label */
+    [data-flux-checkbox] + label,
+    [data-flux-checkbox] ~ * {
+        color: var(--color-bridal-dark) !important;
+    }
+}
